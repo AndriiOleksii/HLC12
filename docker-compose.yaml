@@ -1,0 +1,55 @@
+version: '3'
+services: 
+  world-1:
+    build: WeatherAPI/
+    ports:
+    - "8000:80"
+    environment:
+      ASPNETCORE_URLS: "http://+"
+      ASPNETCORE_ENVIRONMENT: Development
+      COUNTRY_ID: WORLD1
+
+  us-1:
+    build: WeatherAPI/
+    ports:
+    - "8001:80"
+    environment:
+      COUNTRY_ID: US1
+      ASPNETCORE_URLS: "http://+"
+      ASPNETCORE_ENVIRONMENT: Development
+      
+      
+  us-2:
+    build: WeatherAPI/
+    ports:
+    - "8002:80"
+    environment:
+      ASPNETCORE_URLS: "http://+"
+      ASPNETCORE_ENVIRONMENT: Development
+      COUNTRY_ID: US2
+      
+  uk-1:
+    build: WeatherAPI/
+    ports:
+    - "8003:80"
+    environment:
+      ASPNETCORE_URLS: "http://+"
+      ASPNETCORE_ENVIRONMENT: Development
+      COUNTRY_ID: UK1
+   
+  bckp-1:
+    build: WeatherAPI/
+    ports:
+    - "8004:80"
+    environment:
+      ASPNETCORE_URLS: "http://+"
+      ASPNETCORE_ENVIRONMENT: Development
+      COUNTRY_ID: BACKUP
+      
+  nginx-1:
+    image: anroe/nginx-geoip2:1.19.2-alpine-geoip2-3.3
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./GeoLite2-Country.mmdb:/etc/nginx/GeoLite2-Country.mmdb
+    ports:
+      - "4000:4000"
